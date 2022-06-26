@@ -14,4 +14,9 @@ def topics(request):
 	context = {'topic':topics}
 	return render(request, 'learning_logs/topics.html',context)
 
-	
+def topic(request,topic_id):
+	"""Show a single topics and all its entries"""
+	topic = Topic.objects.get(id =topic_id)
+	entries = topic.entry_set.order_by('-date_added') # revrse order
+	context = {'topic':topic,'entries': entries}
+	return render(request, 'learning_logs/topic.html', context)
